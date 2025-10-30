@@ -16,9 +16,24 @@
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'Courier New', monospace;
       color-scheme: light;
     }
-    @media (prefers-color-scheme: dark){
-      :root{ --bg:#0b0b0c; --fg:#e6eef8; --muted:#94a3b8; --accent:#6ea8ff; color-scheme: dark; }
+    
+    
+    [data-theme="light"] {
+    --bg: #fff;
+    --fg: #111;
+    --muted: #586069;
+    --accent: #0b5cff;
+    color-scheme: light;
     }
+
+    [data-theme="dark"] {
+    --bg: #0b0b0c;
+    --fg: #e6eef8;
+    --muted: #94a3b8;
+    --accent: #6ea8ff;
+    color-scheme: dark;
+    }
+
     html,body{height:100%;}
     body{
       margin:0;
@@ -44,6 +59,23 @@
     a{color:inherit;text-decoration:none}
     .link{font-size:13px;color:var(--muted)}
     .link:hover{color:var(--fg);text-decoration:underline}
+
+    #theme-toggle {
+    font-size: 13px;
+    padding: 6px 12px;
+    border: 1px solid var(--muted);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--muted);
+    transition: all 0.2s ease;
+    }
+
+    #theme-toggle:hover {
+    background: var(--muted);
+    color: var(--bg);
+    border-color: var(--fg);
+    }
+
 
     main{padding-top:8px}
     .lead{font-size:15px;margin:0 0 18px;color:var(--muted)}
@@ -76,7 +108,8 @@
       <nav aria-label="main navigation">
         <a class="link" href="https://github.com/mp20" target="_blank">GitHub</a>
         <a class="link" href="https://www.linkedin.com/in/ariyanazari/" target="_blank">LinkedIn</a>
-        <a class="link" href="/Ariya_NazarI__Resume.pdf" target="_blank">résumé</a>        
+        <a class="link" href="/Ariya_NazarI__Resume.pdf" target="_blank">résumé</a>   
+        <button id="theme-toggle" class="link" style="font-size:13px;"></button>     
       </nav>
     </header>
 
@@ -110,6 +143,33 @@
       </footer>
     </main>
   </div>
+  
 
+<script>
+  const toggleBtn = document.getElementById('theme-toggle');
+  const root = document.documentElement;
+  const storedTheme = localStorage.getItem('theme');
+
+  function updateButtonLabel(theme) {
+    toggleBtn.textContent = theme === 'dark' ? 'Light' : 'Dark';
+  }
+
+  if (storedTheme) {
+    root.setAttribute('data-theme', storedTheme);
+    updateButtonLabel(storedTheme);
+  } else {
+    const defaultTheme = 'light';
+    root.setAttribute('data-theme', defaultTheme);
+    updateButtonLabel(defaultTheme);
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    const currentTheme = root.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateButtonLabel(newTheme);
+  });
+</script>
 </body>
 </html>
