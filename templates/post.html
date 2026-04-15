@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{{TITLE}} | Ariya Nazari</title>
+  <meta name="description" content="{{DESCRIPTION}}" />
+  <link rel="icon" href="https://www.svgrepo.com/show/440512/rick.svg">
+  <link rel="stylesheet" href="/assets/css/blog.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-header">
+      <div class="brand">
+        <a class="brand-title" href="/">Ariya Nazari</a>
+        <div class="subtitle">DS/SWE — hobbyist tinkerer</div>
+      </div>
+      <nav class="nav" aria-label="post navigation">
+        <a class="link" href="/blog/">Blog</a>
+        <a class="link" href="https://github.com/mp20" target="_blank">GitHub</a>
+        <a class="link" href="https://www.linkedin.com/in/ariyanazari/" target="_blank">LinkedIn</a>
+        <a class="link" href="/Ariya_Nazari_Resume_Redacted.pdf" target="_blank">Resume</a>
+        <button id="theme-toggle" class="link" type="button"></button>
+      </nav>
+    </header>
+
+    <main class="post-page">
+      <h1>{{TITLE}}</h1>
+      <div class="meta">{{DATE}}</div>
+
+      <div class="post-body">
+{{CONTENT}}
+      </div>
+
+      <div class="backlink"><a href="/blog/">Back to blog</a></div>
+    </main>
+  </div>
+
+  <script>
+    const toggleBtn = document.getElementById('theme-toggle');
+    const root = document.documentElement;
+    const storedTheme = localStorage.getItem('theme');
+
+    function updateButtonLabel(theme) {
+      toggleBtn.textContent = theme === 'dark' ? 'Light' : 'Dark';
+    }
+
+    if (storedTheme) {
+      root.setAttribute('data-theme', storedTheme);
+      updateButtonLabel(storedTheme);
+    } else {
+      const defaultTheme = 'light';
+      root.setAttribute('data-theme', defaultTheme);
+      updateButtonLabel(defaultTheme);
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      const currentTheme = root.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateButtonLabel(newTheme);
+    });
+  </script>
+</body>
+</html>

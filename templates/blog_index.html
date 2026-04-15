@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Blog | Ariya Nazari</title>
+  <meta name="description" content="Notes, thoughts, and project logs from Ariya Nazari." />
+  <link rel="icon" href="https://www.svgrepo.com/show/440512/rick.svg">
+  <link rel="stylesheet" href="/assets/css/blog.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-header">
+      <div class="brand">
+        <a class="brand-title" href="/">Ariya Nazari</a>
+        <div class="subtitle">DS/SWE — hobbyist tinkerer</div>
+      </div>
+      <nav class="nav" aria-label="blog navigation">
+        <a class="link" href="/blog/">Blog</a>
+        <a class="link" href="https://github.com/mp20" target="_blank">GitHub</a>
+        <a class="link" href="https://www.linkedin.com/in/ariyanazari/" target="_blank">LinkedIn</a>
+        <a class="link" href="/Ariya_Nazari_Resume_Redacted.pdf" target="_blank">Resume</a>
+        <button id="theme-toggle" class="link" type="button"></button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="intro">
+        <h1>Blog</h1>
+        <p>
+          Just a simple list of posts. No theme, no CMS, no pipeline. If I have something worth
+          writing down, it goes here.
+        </p>
+      </section>
+
+      <section class="posts">
+{{POST_LIST}}
+      </section>
+    </main>
+
+    <footer>
+      <div>Write in Markdown. Generate static HTML. Push.</div>
+    </footer>
+  </div>
+
+  <script>
+    const toggleBtn = document.getElementById('theme-toggle');
+    const root = document.documentElement;
+    const storedTheme = localStorage.getItem('theme');
+
+    function updateButtonLabel(theme) {
+      toggleBtn.textContent = theme === 'dark' ? 'Light' : 'Dark';
+    }
+
+    if (storedTheme) {
+      root.setAttribute('data-theme', storedTheme);
+      updateButtonLabel(storedTheme);
+    } else {
+      const defaultTheme = 'light';
+      root.setAttribute('data-theme', defaultTheme);
+      updateButtonLabel(defaultTheme);
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      const currentTheme = root.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateButtonLabel(newTheme);
+    });
+  </script>
+</body>
+</html>
