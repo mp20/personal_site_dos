@@ -227,9 +227,6 @@ This gives us three useful signals:
 - `RERANKER_SCORE`: Snowflake's second pass judgment over the retrieved candidates using some form of cross/bi encoder.
 
 
-![Cortex Search scoring signals](/assets/blog/entity-resolution/search-scores.png)
-
-
 You can adjust the weight of each signal in the request to the search service like so:
 
 ```json

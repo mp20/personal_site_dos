@@ -198,7 +198,6 @@ END;
 <li><code>TEXT_MATCH</code>: how much lexical overlap exists</li>
 <li><code>RERANKER_SCORE</code>: Snowflake's second pass judgment over the retrieved candidates using some form of cross/bi encoder.</li>
 </ul>
-<p><img alt="Cortex Search scoring signals" src="/assets/blog/entity-resolution/search-scores.png" /></p>
 <p>You can adjust the weight of each signal in the request to the search service like so:</p>
 <pre><code class="language-json">&quot;scoring_config&quot;: {
   &quot;weights&quot;: {
