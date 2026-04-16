@@ -33,7 +33,7 @@ class Post:
 
 
 def parse_post(path: Path) -> Post:
-    text = path.read_text(encoding="utf-8")
+    text = path.read_text(encoding="utf-8").lstrip()
     match = re.match(r"^---\n(.*?)\n---\n(.*)$", text, re.DOTALL)
     if not match:
         raise ValueError(f"{path.name}: missing front matter")
@@ -63,16 +63,12 @@ def parse_post(path: Path) -> Post:
         body.strip(),
         extensions=["fenced_code", "tables", "sane_lists"],
     )
-    indented_body = "\n".join(
-        f"        {line}" if line else "" for line in body_html.splitlines()
-    )
-
     return Post(
         title=meta["title"],
         date=meta["date"],
         description=meta["description"],
         slug=slug,
-        content_html=indented_body,
+        content_html=body_html,
         output_dir=BLOG_DIR / slug,
     )
 

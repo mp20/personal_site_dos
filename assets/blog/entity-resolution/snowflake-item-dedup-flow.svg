@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="2580" viewBox="0 0 1400 2580" role="img" aria-labelledby="title desc">
+  <title id="title">Snowflake item deduplication search pipeline</title>
+  <desc id="desc">A flow diagram showing query normalization, original and AI-generated variant Cortex searches, union, deduplication, independent ranking, reciprocal rank fusion, sorting, and final output.</desc>
+  <defs>
+    <marker id="arrow-blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrow-gray" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#475569"/>
+    </marker>
+    <style>
+      .bg { fill: #ffffff; }
+      .title { font: 700 34px Arial, Helvetica, sans-serif; fill: #0f172a; }
+      .subtitle { font: 400 18px Arial, Helvetica, sans-serif; fill: #475569; }
+      .section { font: 700 13px Arial, Helvetica, sans-serif; letter-spacing: 1px; fill: #334155; }
+      .box-title { font: 700 22px Arial, Helvetica, sans-serif; fill: #0f172a; }
+      .box-subtitle { font: 700 16px Arial, Helvetica, sans-serif; fill: #334155; }
+      .body { font: 400 16px Arial, Helvetica, sans-serif; fill: #334155; }
+      .small { font: 400 14px Arial, Helvetica, sans-serif; fill: #475569; }
+      .code { font: 700 15px Menlo, Consolas, monospace; fill: #1e293b; }
+      .formula { font: 700 18px Menlo, Consolas, monospace; fill: #0f172a; }
+      .io { fill: #eef7ff; stroke: #2563eb; stroke-width: 2.5; }
+      .prep { fill: #f7fee7; stroke: #65a30d; stroke-width: 2.5; }
+      .search { fill: #eff6ff; stroke: #1d4ed8; stroke-width: 2.5; }
+      .ai { fill: #faf5ff; stroke: #7e22ce; stroke-width: 2.5; }
+      .merge { fill: #fff7ed; stroke: #ea580c; stroke-width: 2.5; }
+      .score { fill: #f8fafc; stroke: #475569; stroke-width: 2.5; }
+      .note { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.5; }
+      .arrow-blue { stroke: #2563eb; stroke-width: 3; fill: none; marker-end: url(#arrow-blue); }
+      .arrow-gray { stroke: #475569; stroke-width: 3; fill: none; marker-end: url(#arrow-gray); }
+      .arrow-purple { stroke: #7e22ce; stroke-width: 3; fill: none; marker-end: url(#arrow-gray); }
+      .pill-blue { fill: #dbeafe; stroke: #93c5fd; }
+      .pill-purple { fill: #f3e8ff; stroke: #d8b4fe; }
+      .pill-orange { fill: #ffedd5; stroke: #fdba74; }
+      .branch-label { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.5; }
+      .muted-line { stroke: #e2e8f0; stroke-width: 1; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1400" height="2580"/>
+
+  <text class="title" x="700" y="66" text-anchor="middle">Snowflake Item Deduplication Pipeline</text>
+  <text class="subtitle" x="700" y="98" text-anchor="middle">Hybrid Cortex Search plus AI-generated query variants, deduped and fused with reciprocal rank scoring</text>
+
+  <rect class="io" x="470" y="135" width="460" height="132" rx="8"/>
+  <text class="box-title" x="700" y="174" text-anchor="middle">Input</text>
+  <text class="code" x="700" y="207" text-anchor="middle">"TNF BASE CAMP HOODIE BLK L"</text>
+  <text class="small" x="700" y="238" text-anchor="middle">optional PRODUCT_LINE filter</text>
+
+  <path class="arrow-blue" d="M700 267 L700 323"/>
+
+  <rect class="prep" x="470" y="325" width="460" height="132" rx="8"/>
+  <text class="box-title" x="700" y="364" text-anchor="middle">Normalize Query</text>
+  <text class="body" x="700" y="397" text-anchor="middle">uppercase item text</text>
+  <text class="body" x="700" y="423" text-anchor="middle">clean special characters and spacing</text>
+
+  <path class="arrow-blue" d="M700 457 L700 505"/>
+  <path class="arrow-blue" d="M700 505 L350 505 L350 568"/>
+  <path class="arrow-blue" d="M700 505 L1050 505 L1050 568"/>
+
+  <rect class="branch-label" x="90" y="526" width="190" height="28" rx="6"/>
+  <text class="section" x="185" y="545" text-anchor="middle">ORIGINAL QUERY PATH</text>
+
+  <rect class="search" x="90" y="570" width="520" height="270" rx="8"/>
+  <text class="box-title" x="350" y="612" text-anchor="middle">Cortex Search</text>
+  <text class="box-subtitle" x="350" y="645" text-anchor="middle">original normalized query</text>
+  <rect class="pill-blue" x="130" y="675" width="440" height="40" rx="20"/>
+  <text class="code" x="350" y="701" text-anchor="middle">TNF BASE CAMP HOODIE BLK L</text>
+  <text class="body" x="350" y="746" text-anchor="middle">returns top K candidate items</text>
+  <line class="muted-line" x1="150" y1="770" x2="550" y2="770"/>
+  <text class="small" x="350" y="798" text-anchor="middle">scores returned per result</text>
+  <text class="code" x="210" y="826">cosine</text>
+  <text class="code" x="330" y="826">text_match</text>
+  <text class="code" x="470" y="826">reranker</text>
+
+  <rect class="branch-label" x="790" y="526" width="150" height="28" rx="6"/>
+  <text class="section" x="865" y="545" text-anchor="middle">AI VARIANT PATH</text>
+
+  <rect class="ai" x="790" y="570" width="520" height="330" rx="8"/>
+  <text class="box-title" x="1050" y="612" text-anchor="middle">AI_COMPLETE</text>
+  <text class="box-subtitle" x="1050" y="645" text-anchor="middle">structured output JSON</text>
+  <text class="body" x="1050" y="684" text-anchor="middle">Use controlled transformation mappings</text>
+  <text class="body" x="1050" y="712" text-anchor="middle">expand, contract, and mix mapped terms only</text>
+  <line class="muted-line" x1="850" y1="738" x2="1250" y2="738"/>
+  <text class="small" x="1050" y="768" text-anchor="middle">example response</text>
+  <text class="code" x="875" y="793">{"alternates": [</text>
+  <text class="code" x="915" y="819">"NORTHFACE BC PULLOVER BLACK LARGE",</text>
+  <text class="code" x="915" y="845">"NF BASECAMP HDY BLK L",</text>
+  <text class="code" x="915" y="871">"TNF BC PO BLACK LRG"</text>
+  <text class="code" x="875" y="894">]}</text>
+
+  <path class="arrow-gray" d="M1050 900 L1050 957"/>
+
+  <rect class="ai" x="870" y="960" width="360" height="104" rx="8"/>
+  <text class="box-title" x="1050" y="999" text-anchor="middle">For Each Variant</text>
+  <text class="body" x="1050" y="1033" text-anchor="middle">run capped generated searches</text>
+
+  <path class="arrow-gray" d="M1050 1064 L1050 1112"/>
+  <path class="arrow-gray" d="M1050 1112 L670 1112 L670 1168"/>
+  <path class="arrow-gray" d="M1050 1112 L950 1112 L950 1168"/>
+  <path class="arrow-gray" d="M1050 1112 L1230 1112 L1230 1168"/>
+
+  <rect class="search" x="540" y="1170" width="260" height="188" rx="8"/>
+  <text class="box-title" x="670" y="1209" text-anchor="middle">Cortex Search</text>
+  <text class="box-subtitle" x="670" y="1241" text-anchor="middle">variant 1</text>
+  <text class="code" x="670" y="1274" text-anchor="middle">NORTHFACE BC</text>
+  <text class="code" x="670" y="1300" text-anchor="middle">PULLOVER BLACK</text>
+  <text class="code" x="670" y="1326" text-anchor="middle">LARGE</text>
+  <text class="body" x="670" y="1348" text-anchor="middle">top K results</text>
+
+  <rect class="search" x="820" y="1170" width="260" height="188" rx="8"/>
+  <text class="box-title" x="950" y="1209" text-anchor="middle">Cortex Search</text>
+  <text class="box-subtitle" x="950" y="1241" text-anchor="middle">variant 2</text>
+  <text class="code" x="950" y="1288" text-anchor="middle">NF BASECAMP HDY BLK L</text>
+  <text class="body" x="950" y="1330" text-anchor="middle">top K results</text>
+
+  <rect class="search" x="1100" y="1170" width="260" height="188" rx="8"/>
+  <text class="box-title" x="1230" y="1209" text-anchor="middle">Cortex Search</text>
+  <text class="box-subtitle" x="1230" y="1241" text-anchor="middle">variant 3</text>
+  <text class="code" x="1230" y="1288" text-anchor="middle">TNF BC PO BLACK LRG</text>
+  <text class="body" x="1230" y="1330" text-anchor="middle">top K results</text>
+
+  <path class="arrow-blue" d="M350 840 L350 1455"/>
+  <path class="arrow-gray" d="M670 1358 L670 1420 L700 1420 L700 1455"/>
+  <path class="arrow-gray" d="M950 1358 L950 1420 L700 1420 L700 1455"/>
+  <path class="arrow-gray" d="M1230 1358 L1230 1420 L700 1420 L700 1455"/>
+
+  <rect class="merge" x="320" y="1460" width="760" height="142" rx="8"/>
+  <text class="box-title" x="700" y="1502" text-anchor="middle">Union All Search Results</text>
+  <text class="body" x="700" y="1538" text-anchor="middle">bounded candidate rows from original and variant searches</text>
+  <text class="body" x="700" y="1567" text-anchor="middle">the same ITEM_NUMBER may appear multiple times</text>
+
+  <path class="arrow-gray" d="M700 1602 L700 1657"/>
+
+  <rect class="score" x="320" y="1660" width="760" height="166" rx="8"/>
+  <text class="box-title" x="700" y="1702" text-anchor="middle">Deduplicate</text>
+  <text class="code" x="700" y="1739" text-anchor="middle">PARTITION BY ITEM_NUMBER</text>
+  <text class="body" x="700" y="1772" text-anchor="middle">keep the row with highest COSINE_SIMILARITY</text>
+  <text class="small" x="700" y="1803" text-anchor="middle">unique items remain after duplicate candidates are collapsed</text>
+
+  <path class="arrow-gray" d="M700 1826 L700 1881"/>
+
+  <rect class="score" x="320" y="1885" width="760" height="170" rx="8"/>
+  <text class="box-title" x="700" y="1927" text-anchor="middle">Rank Independently</text>
+  <text class="code" x="700" y="1964" text-anchor="middle">RANK_COS = ROW_NUMBER() ORDER BY cosine DESC</text>
+  <text class="code" x="700" y="1993" text-anchor="middle">RANK_TXT = ROW_NUMBER() ORDER BY text_match DESC</text>
+  <text class="code" x="700" y="2022" text-anchor="middle">RANK_RR  = ROW_NUMBER() ORDER BY reranker DESC</text>
+
+  <path class="arrow-gray" d="M700 2055 L700 2110"/>
+
+  <rect class="score" x="320" y="2115" width="760" height="176" rx="8"/>
+  <text class="box-title" x="700" y="2157" text-anchor="middle">Reciprocal Rank Fusion</text>
+  <text class="formula" x="700" y="2198" text-anchor="middle">RRF = 1/(60+RANK_COS)</text>
+  <text class="formula" x="700" y="2229" text-anchor="middle">+ 1/(60+RANK_TXT) + 1/(60+RANK_RR)</text>
+  <text class="small" x="700" y="2265" text-anchor="middle">max possible score: 3 x 1/61 = 0.0492</text>
+
+  <path class="arrow-gray" d="M700 2291 L700 2328"/>
+
+  <rect class="score" x="320" y="2332" width="760" height="132" rx="8"/>
+  <text class="box-title" x="700" y="2374" text-anchor="middle">Sort and Limit</text>
+  <text class="code" x="700" y="2410" text-anchor="middle">ORDER BY RRF DESC LIMIT TOP_N</text>
+  <text class="small" x="700" y="2441" text-anchor="middle">rank, RRF_SCORE, COS, TXT, RR, SEARCH_SOURCE</text>
+
+  <path class="arrow-gray" d="M700 2464 L700 2508"/>
+
+  <rect class="io" x="420" y="2512" width="560" height="52" rx="8"/>
+  <text class="box-title" x="700" y="2546" text-anchor="middle">Output: ranked deduplicated item matches</text>
+</svg>

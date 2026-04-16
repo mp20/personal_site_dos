@@ -179,8 +179,68 @@ a{color:inherit;text-decoration:none}
   max-width:40rem;
 }
 
+.post-body h2{
+  font-size:24px;
+  line-height:1.25;
+  letter-spacing:-0.02em;
+  margin:42px 0 14px;
+}
+
 .post-body p{
   margin:0 0 20px;
+}
+
+.post-body ul,
+.post-body ol{
+  margin:0 0 20px;
+  padding-left:1.3rem;
+}
+
+.post-body li{
+  margin:0 0 8px;
+}
+
+.post-body blockquote{
+  margin:0 0 22px;
+  padding:2px 0 2px 18px;
+  border-left:3px solid var(--rule);
+  color:var(--muted);
+}
+
+.post-body img{
+  display:block;
+  max-width:100%;
+  height:auto;
+  margin:26px 0;
+  border:1px solid var(--rule);
+  border-radius:8px;
+}
+
+.post-body code{
+  font-family:var(--mono);
+  font-size:0.9em;
+}
+
+.post-body p code,
+.post-body li code{
+  padding:0.1em 0.28em;
+  border:1px solid var(--rule);
+  border-radius:4px;
+  background:rgba(127,127,127,0.08);
+}
+
+.post-body pre{
+  overflow-x:auto;
+  margin:0 0 24px;
+  padding:16px;
+  border:1px solid var(--rule);
+  border-radius:8px;
+  background:rgba(127,127,127,0.08);
+  line-height:1.55;
+}
+
+.post-body pre code{
+  font-size:14px;
 }
 
 .backlink{
@@ -213,4 +273,6 @@ footer{
   .excerpt{font-size:15px}
   .post-page h1{font-size:28px}
   .post-body{font-size:17px}
+  .post-body h2{font-size:21px}
+  .post-body pre code{font-size:13px}
 }
